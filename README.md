@@ -9,8 +9,8 @@ This project ended up being rather long, so I broke it up into three parts and c
 
 ## Table of Contents
 
-Part 1 - Initial dataset from 538's website, target variable extraction, and feature engineering
+Rose_Data_Engineering_P1 - Initial dataset from 538's website, target variable extraction, and feature engineering
 
-Part 2 - Does the bachelorette and a contestant have the same political leanings, hometown, and cultural background?
+Rose_Data_Engineering_P2 - Does the bachelorette and a contestant have the same political leanings, hometown, and cultural background?
 
-Part 3 - Modeling of custom-built dataset and conclusion.
+Predicting_Roses - Modeling of custom-built dataset and conclusion.
