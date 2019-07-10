@@ -5,7 +5,7 @@ Recently I started watching The Bachelorette with my girlfriend and found out th
 
 In summary, I ended up not being able to get lower than a two round error when predicting elimination since the data collected didn't have enough correlation to the target variable.  We can still have a vague idea of if a contestant will be eliminated towards the beginning or end of the show, but there is certainly room for improvement which is exciting.  After looking around, I couldn't find a good dataset to use and ended up constructing one from scratch by scraping various webpages and sorting the information into a nice table.  
 
-This project ended up being rather long, so I broke it up into three parts and created a table of contents. If you are interested in the data engineering read parts 1 and 2.  If you want to learn more about the machine learning read part 3.
+This project ended up being rather long, so I broke it up into three parts and created a table of contents. If you are interested in the data engineering, read parts 1 and 2.  If you want to learn more about the machine learning, read part 3.
 
 ## Table of Contents
 
