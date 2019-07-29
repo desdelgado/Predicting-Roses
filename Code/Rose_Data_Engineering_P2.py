@@ -431,15 +431,20 @@ print(bachelorettesHT.head(10))
 running_table['Match Region'] = 0
 running_table['Match City'] = 0
 
-for row in range(0,len(bachelorettesHT)):
-    for contest in range(0, len(running_table)):
-        #tests if the seasons match and the regions match
-        #Match regions
-        if (bachelorettesHT.iloc[row,1] == running_table.iloc[contest, 1]) and (bachelorettesHT.iloc[row, -1] == running_table.iloc[contest, 27]):
-            running_table.iloc[contest,-2] = 1
-            #Match City
-        if (bachelorettesHT.iloc[row,1] == running_table.iloc[contest, 1]) and (bachelorettesHT.iloc[row, 2] == running_table.iloc[contest, 24]):
-            running_table.iloc[contest,-1] = 1
+# Create indexs to be able to use .loc rather than .iloc..makes the code more generalizable
+bachelorettesHT.index = bachelorettesHT['Bachelorette']
+running_table.index = running_table['CONTESTANT']
+running_table.drop_duplicates('CONTESTANT', inplace = True)
+
+for row in bachelorettesHT.index.tolist():
+    # Get each bachelorette contestant
+    for contest in running_table.index.tolist():
+        if (bachelorettesHT.loc[row,'Season'] == running_table.loc[contest, 'SEASON']) and (bachelorettesHT.loc[row,'Culture Region'] == running_table.loc[contest, 'Culture Region']):
+            # Check if the bachelorette and contestant are from the same cultural region
+            running_table.loc[contest, 'Match Region'] = 1
+            if bachelorettesHT.loc[row,'Hometown'] == running_table.loc[contest, 'Hometown']:
+                # Check if the bachelorette and contestant are from the same city
+                running_table.loc[contest, 'Match City'] = 1
             
 #Add this data to the prediction table.
 bachelorette_predict = pd.merge(bachelorette_predict, running_table[['CONTESTANT','Match Region', 'Match City']], on = 'CONTESTANT')      

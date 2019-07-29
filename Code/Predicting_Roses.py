@@ -90,7 +90,7 @@ plt.show()
 # 
 # Let's extend this EDA by looking at how features are correlated with each other in a correlation matrix.  This matrix gives us a number between 1 and -1 for each pair of features which means if the number is close to 1 they're positivity correlated, close to -1 negatively correlated, and if the number is close to 0 there is no correlation.  Thus, we are hoping that there are some features not close to zero with regards to our target variable of "Round_Eliminated."
 
-# In[ ]:
+# In[5]:
 
 
 correlations = Bachelorette_Data[Bachelorette_Data.columns[1:]].corr()
@@ -104,7 +104,7 @@ plt.show()
 # 
 # All is not lost though as the correlation matrix above only looks at the linear relationship between variables.  We can see if there are non-linear correlation's by looking at the mutual information between variables.  In short, this metric tells us how much information we gain about one variable given knowledge of another.  If the metric is 0 then the variables are independent of each other.  On the other hand, the higher the metric to more dependent they are.  To put it another way, if we know it's sunny out, then we also know there's a low probability that it is raining and we would return a high mutual information score (in our minds).  For further reading, check out this [Wikipedia article](https://en.wikipedia.org/wiki/Mutual_information)  Let's use sklearn's `mutual_information_regression` to see what we can get.
 
-# In[ ]:
+# In[6]:
 
 
 # Get sepearte dataframe 
@@ -146,7 +146,7 @@ print(score.sort_values(by = ['MI_Score'], ascending = False))
 # 
 # As in good practice, we'll split our data into training and test data in order to avoid getting artificially high accuracy numbers.  
 
-# In[ ]:
+# In[7]:
 
 
 X_train, X_test, y_train, y_test = train_test_split(data_in.iloc[:,1:], data_in["Round_Eliminated"], test_size=0.3, random_state=5)
@@ -156,7 +156,7 @@ X_train, X_test, y_train, y_test = train_test_split(data_in.iloc[:,1:], data_in[
 # 
 # Taking a step back, when one's on a date typically you go through various decisions about the opposite person: do they like dogs? Do they like certain sports teams? Do they like the bachelorette?  This thought process sounds a lot like a decision tree.  Thus, as a starting point let's investigate a random forest regressor which is an ensemble method utilizing a bunch of decision trees.  Moreover, using the ensemble method will help us avoid overfitting our data.  Furthermore, we can use cross-fold validation to further insulate our model from over fitting.
 
-# In[ ]:
+# In[8]:
 
 
 reg = RandomForestRegressor()
@@ -173,7 +173,7 @@ print('RMSE Score of: ' + str(RMSE_CV_results))
 # 
 # Now that our initial model is alright but not the best, let's reuse a function from a previous regression project I worked on.  In that project, I attempted to predict engine failure using signal data and can be found [here](https://github.com/desdelgado/Turbofan_Project/blob/master/Turbo_Fan_Failure_Prediction.ipynb).  There, I wrote a function that looks at various models and quickly checks them against each other.  This can help guide our choice of model moving forward. 
 
-# In[ ]:
+# In[9]:
 
 
 def compare_algorithms(algorithms, X_data, y_data, scoring = 'neg_mean_squared_error', num_folds = 3, seed = 5):
@@ -211,7 +211,7 @@ def compare_algorithms(algorithms, X_data, y_data, scoring = 'neg_mean_squared_e
 
 # Next, let's use a couple different regression models including the random forest regressor to help calibrate where we are at.  We can then graph and print the RMSE data to inspect our results.
 
-# In[ ]:
+# In[10]:
 
 
 models = []
@@ -226,7 +226,7 @@ models.append(('Bagging', RandomForestRegressor()))
 single_model_compare, results = compare_algorithms(models, X_train, y_train, num_folds = 7)
 
 
-# In[ ]:
+# In[11]:
 
 
 fig = plt.figure()
@@ -256,7 +256,7 @@ print(single_model_compare)
 # 
 # Let's first do the random search.
 
-# In[ ]:
+# In[12]:
 
 
 #%% Hyperparameter Tune Knn
@@ -282,7 +282,7 @@ estimators_random = model1.best_params_
 
 # Let's write a function that will allow us to quickly check this tuned (though randomly) version of the model against just the basic un-tuned model we tried earlier.  
 
-# In[ ]:
+# In[13]:
 
 
 def evaluate_model(model, test_features, test_labels, model_name = 'General', scoring = 'neg_mean_squared_error', num_folds = 7, seed = 5):
@@ -303,7 +303,7 @@ def evaluate_model(model, test_features, test_labels, model_name = 'General', sc
     print('Root Mean Squared Error: {:0.4f} Rounds, std: {:0.4f}.'.format(results_mean, results_std))
 
 
-# In[ ]:
+# In[14]:
 
 
 base_model = KNeighborsRegressor()
@@ -317,7 +317,7 @@ random_accuracy = evaluate_model(best_random, X_test, y_test, 'Random KNN')
 
 # Hmmm, it doesn't appear that our tuned model does any better than our base model.  As a last effort let's try to do a more fine parameter search.
 
-# In[ ]:
+# In[15]:
 
 
 #%% Hyperparameter Tune Knn
