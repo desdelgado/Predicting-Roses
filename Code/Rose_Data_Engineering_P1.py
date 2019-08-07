@@ -150,18 +150,18 @@ def r_elim(ind):
         they were eliminated.  Returns 0 for winners
     '''
     if 'E' in ind.values:
-        return ind[ind == 'E'].index[0]
+        return int(ind[ind == 'E'].index[0])
     elif 'ED' in ind.values:
-        return ind[ind == 'ED'].index[0]
+        return int(ind[ind == 'ED'].index[0])
     elif 'EQ' in ind.values:
-        return ind[ind == 'EQ'].index[0]
+        return int(ind[ind == 'EQ'].index[0])
     elif 'EF' in ind.values:
-        return ind[ind == 'EF'].index[0]
+        return int(ind[ind == 'EF'].index[0])
     elif 'EU' in ind.values:
-        return ind[ind == 'EU'].index[0] 
+        return int(ind[ind == 'EU'].index[0]) 
     #Now for winners
     else:
-        return 0
+        return int(ind[ind == 'W'].index[0]) + 1
 
 
 # In[13]:

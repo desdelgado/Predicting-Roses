@@ -90,7 +90,7 @@ plt.show()
 # 
 # Let's extend this EDA by looking at how features are correlated with each other in a correlation matrix.  This matrix gives us a number between 1 and -1 for each pair of features which means if the number is close to 1 they're positivity correlated, close to -1 negatively correlated, and if the number is close to 0 there is no correlation.  Thus, we are hoping that there are some features not close to zero with regards to our target variable of "Round_Eliminated."
 
-# In[5]:
+# In[17]:
 
 
 correlations = Bachelorette_Data[Bachelorette_Data.columns[1:]].corr()
@@ -100,7 +100,7 @@ sns.heatmap(correlations,annot=True, cmap = 'coolwarm')
 plt.show()
 
 
-# Dang, when we look at the "Round_Eliminated" either column or row we see that the most positive correlation is the "Political Difference" at 0.11 and the most negative is the "Percentage Left after D1" at -0.11.  On the surface, this data set doesn't look great.
+# Dang, when we look at the "Round_Eliminated" either column or row we see that the most positive correlation is the "Political Difference" at 0.11 and the most negative is the "Percentage Left after D1" at -0.23.  On the surface, this data set doesn't look great as we have maybe two variables that are correlated to the target variable.  
 # 
 # All is not lost though as the correlation matrix above only looks at the linear relationship between variables.  We can see if there are non-linear correlation's by looking at the mutual information between variables.  In short, this metric tells us how much information we gain about one variable given knowledge of another.  If the metric is 0 then the variables are independent of each other.  On the other hand, the higher the metric to more dependent they are.  To put it another way, if we know it's sunny out, then we also know there's a low probability that it is raining and we would return a high mutual information score (in our minds).  For further reading, check out this [Wikipedia article](https://en.wikipedia.org/wiki/Mutual_information)  Let's use sklearn's `mutual_information_regression` to see what we can get.
 
@@ -315,7 +315,7 @@ best_random.fit(X_train, y_train)
 random_accuracy = evaluate_model(best_random, X_test, y_test, 'Random KNN')
 
 
-# Hmmm, it doesn't appear that our tuned model does any better than our base model.  As a last effort let's try to do a more fine parameter search.
+# Hmmm, it appears that our randomly tuned model does slightly better than the base model, however, with the standard deviations they are very similar.  As a last effort let's try to do a more fine parameter search.
 
 # In[15]:
 
@@ -338,6 +338,20 @@ print("Best Hyper Parameters:\n",model1.best_params_)
 
 #Save the parameters so we can use them in the future
 estimators_grid = model2.best_params_
+
+
+# Let's check these grid searched parameters against the base model.  I believe, however, we won't get much improvement as the hyperparameters are the same. 
+
+# In[16]:
+
+
+base_model = KNeighborsRegressor()
+base_model.fit(X_train, y_train)
+base_accuracy = evaluate_model(base_model, X_test, y_test, 'Base model KNN')
+
+best_grid = KNeighborsRegressor(**estimators_grid)
+best_grid.fit(X_train, y_train)
+random_accuracy = evaluate_model(best_random, X_test, y_test, 'Grid KNN')
 
 
 # ## Conclusion
