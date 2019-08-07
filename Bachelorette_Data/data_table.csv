@@ -1,5 +1,5 @@
 ,CONTESTANT,SHOW,Round_Eliminated,First_Impression_Rose,Percentage Left after D1
-0,13_BRYAN_A,Bachelorette,0,1,50.0
+0,13_BRYAN_A,Bachelorette,11,1,50.0
 1,13_PETER_K,Bachelorette,10,0,80.0
 2,13_ERIC_B,Bachelorette,9,0,40.0
 3,13_DEAN_U,Bachelorette,8,0,60.0
@@ -30,7 +30,7 @@
 28,13_MILTON_L,Bachelorette,1,0,
 29,13_MOHIT_S,Bachelorette,1,0,
 30,13_ROB_H,Bachelorette,1,0,
-31,12_JORDAN_R,Bachelorette,0,1,50.0
+31,12_JORDAN_R,Bachelorette,11,1,50.0
 32,12_ROBBY_H,Bachelorette,10,0,20.0
 33,12_CHASE_M,Bachelorette,9,0,70.0
 34,12_LUKE_P,Bachelorette,8,0,60.0
@@ -56,7 +56,7 @@
 54,12_JONATHAN_H,Bachelorette,1,0,
 55,12_JAKE_P,Bachelorette,1,0,
 56,12_COLEY_K,Bachelorette,1,0,
-57,11_SHAWN_B,Bachelorette,0,1,44.44444444444444
+57,11_SHAWN_B,Bachelorette,10,1,44.44444444444444
 58,11_NICK_V,Bachelorette,9,0,33.33333333333333
 59,11_BEN_H,Bachelorette,8,0,44.44444444444444
 60,11_JARED_H,Bachelorette,7,0,55.55555555555556
@@ -82,7 +82,7 @@
 80,11_SHAWN_E,Bachelorette,1,0,
 81,11_BRADY_T,Bachelorette,1,0,
 82,11_RYAN_M,Bachelorette,1,0,
-83,10_JOSH_M,Bachelorette,0,0,50.0
+83,10_JOSH_M,Bachelorette,11,0,50.0
 84,10_NICK_V,Bachelorette,10,1,70.0
 85,10_CHRIS_S,Bachelorette,9,0,80.0
 86,10_MARCUS_G,Bachelorette,8,0,60.0
@@ -107,7 +107,7 @@
 105,10_MIKE_C,Bachelorette,1,0,
 106,10_RUDIE_D,Bachelorette,1,0,
 107,10_STEVEN_W,Bachelorette,1,0,
-108,09_CHRIS_S,Bachelorette,0,0,50.0
+108,09_CHRIS_S,Bachelorette,11,0,50.0
 109,09_DREW_K,Bachelorette,10,1,40.0
 110,09_BROOKS_F,Bachelorette,9,0,80.0
 111,09_ZAK_W,Bachelorette,8,1,40.0
@@ -132,7 +132,7 @@
 130,09_MIKE_X,Bachelorette,1,0,
 131,09_NICK_R,Bachelorette,1,0,
 132,09_JONATHAN_V,Bachelorette,1,0,
-133,08_JEF_H,Bachelorette,0,0,50.0
+133,08_JEF_H,Bachelorette,11,0,50.0
 134,08_ARIE_L,Bachelorette,10,0,70.0
 135,08_SEAN_L,Bachelorette,9,0,50.0
 136,08_CHRIS_B,Bachelorette,8,0,70.0
@@ -157,7 +157,7 @@
 155,08_JEANPAUL_L,Bachelorette,1,0,
 156,08_LERONE_A,Bachelorette,1,0,
 157,08_RANDY_W,Bachelorette,1,0,
-158,07_JP_R,Bachelorette,0,0,70.0
+158,07_JP_R,Bachelorette,11,0,70.0
 159,07_BEN_F,Bachelorette,10,0,50.0
 160,07_CONSTANTINE_T,Bachelorette,9,0,60.0
 161,07_AMES_B,Bachelorette,8,0,60.0
@@ -182,7 +182,7 @@
 180,07_MICHAEL_B,Bachelorette,1,0,
 181,07_ROB_D,Bachelorette,1,0,
 182,07_TIM_M,Bachelorette,1,0,
-183,06_ROBERT_M,Bachelorette,0,1,70.0
+183,06_ROBERT_M,Bachelorette,11,1,70.0
 184,06_CHRIS_L,Bachelorette,10,0,60.0
 185,06_FRANK_N,Bachelorette,9,0,80.0
 186,06_KIRK_D,Bachelorette,8,0,50.0
@@ -207,7 +207,7 @@
 205,06_KYLE_H,Bachelorette,1,0,
 206,06_PHIL_K,Bachelorette,1,0,
 207,06_TYLER_M,Bachelorette,1,0,
-208,05_ED_S,Bachelorette,0,0,70.0
+208,05_ED_S,Bachelorette,11,0,70.0
 209,05_KIPTYN_L,Bachelorette,10,0,60.0
 210,05_REID_R,Bachelorette,9,0,40.0
 211,05_WES_H,Bachelorette,8,0,30.0
@@ -237,7 +237,7 @@
 235,05_JOSH_Y,Bachelorette,1,0,
 236,05_KYLE_Y,Bachelorette,1,0,
 237,05_STEPHEN_R,Bachelorette,1,0,
-238,04_JESSE_C,Bachelorette,0,1,50.0
+238,04_JESSE_C,Bachelorette,9,1,50.0
 239,04_JASON_M,Bachelorette,8,0,62.5
 240,04_JEREMY_A,Bachelorette,7,1,37.5
 241,04_GRAHAM_B,Bachelorette,6,0,75.0
@@ -262,7 +262,7 @@
 260,04_PATRICK_C,Bachelorette,1,0,
 261,04_PATRICK_D,Bachelorette,1,0,
 262,04_SPERO_S,Bachelorette,1,0,
-263,03_JERRY_F,Bachelorette,0,0,50.0
+263,03_JERRY_F,Bachelorette,9,0,50.0
 264,03_JOHN PAUL_M,Bachelorette,7,0,62.5
 265,03_RYAN_SH,Bachelorette,6,0,50.0
 266,03_WENDELL_J,Bachelorette,5,0,37.5
@@ -287,7 +287,7 @@
 285,03_ERIC_T,Bachelorette,1,0,
 286,03_KEVIN,Bachelorette,1,0,
 287,03_MATT_L,Bachelorette,1,0,
-288,02_IAN_M,Bachelorette,0,0,57.14285714285714
+288,02_IAN_M,Bachelorette,8,0,57.14285714285714
 289,02_MATTHEW_H,Bachelorette,7,0,42.857142857142854
 290,02_CHAD_X,Bachelorette,6,0,42.857142857142854
 291,02_LANNY_X,Bachelorette,5,0,42.857142857142854
@@ -312,7 +312,7 @@
 310,02_JUSTIN_X,Bachelorette,1,0,
 311,02_KEITH_X,Bachelorette,1,0,
 312,02_TREVER_X,Bachelorette,1,0,
-313,01_RYAN_S,Bachelorette,0,0,50.0
+313,01_RYAN_S,Bachelorette,7,0,50.0
 314,01_CHARLIE_M,Bachelorette,6,0,50.0
 315,01_RUSS_X,Bachelorette,5,0,50.0
 316,01_GREG_T,Bachelorette,4,0,33.33333333333333
@@ -337,7 +337,7 @@
 335,01_PAUL_X,Bachelorette,1,0,
 336,01_PETER_X,Bachelorette,1,0,
 337,01_WAYNE_X,Bachelorette,1,0,
-338,21_VANESSA_G,Bachelor,0,1,70.0
+338,21_VANESSA_G,Bachelor,11,1,70.0
 339,21_RAVEN_G,Bachelor,10,0,60.0
 340,21_RACHEL_L,Bachelor,9,0,50.0
 341,21_CORRINE_O,Bachelor,8,0,20.0
@@ -367,7 +367,7 @@
 365,21_LAUREN_H,Bachelor,1,0,
 366,21_SUSANNAH_M,Bachelor,1,0,
 367,21_MICHELLE_R,Bachelor,1,0,
-368,20_LAUREN_B,Bachelor,0,0,70.0
+368,20_LAUREN_B,Bachelor,11,0,70.0
 369,20_JOJO_F,Bachelor,10,0,60.0
 370,20_CAILA_Q,Bachelor,9,0,80.0
 371,20_AMANDA_S,Bachelor,8,0,50.0
@@ -395,7 +395,7 @@
 393,20_BREANNE_R,Bachelor,1,0,
 394,20_LAUREN_R,Bachelor,1,0,
 395,20_TIARA_S,Bachelor,1,0,
-396,19_WHITNEY_B,Bachelor,0,0,70.0
+396,19_WHITNEY_B,Bachelor,11,0,70.0
 397,19_BECCA_T,Bachelor,10,0,40.0
 398,19_KAITLYN_B,Bachelor,9,0,70.0
 399,19_JADE_R,Bachelor,8,0,60.0
@@ -425,7 +425,7 @@
 423,19_MICHELLE_D,Bachelor,1,0,
 424,19_NICOLE_M,Bachelor,1,0,
 425,19_REEGAN_C,Bachelor,1,0,
-426,18_NIKKI_F,Bachelor,0,0,50.0
+426,18_NIKKI_F,Bachelor,11,0,50.0
 427,18_CLARE_C,Bachelor,10,0,80.0
 428,18_ANDI_D,Bachelor,9,0,40.0
 429,18_RENEE_O,Bachelor,8,0,50.0
@@ -452,7 +452,7 @@
 450,18_LAUREN_H,Bachelor,1,0,
 451,18_MAGGIE_G,Bachelor,1,0,
 452,18_VALERIE_E,Bachelor,1,0,
-453,17_CATHERINE_G,Bachelor,0,1,40.0
+453,17_CATHERINE_G,Bachelor,11,1,40.0
 454,17_LINDSAY_Y,Bachelor,10,0,50.0
 455,17_ASHLEE_F,Bachelor,9,1,70.0
 456,17_DESIREE_H,Bachelor,8,1,80.0
@@ -478,7 +478,7 @@
 476,17_LACEY_L,Bachelor,1,0,
 477,17_LAUREN_M,Bachelor,1,0,
 478,17_PAIGE_V,Bachelor,1,0,
-479,16_COURTNEY_R,Bachelor,0,0,80.0
+479,16_COURTNEY_R,Bachelor,11,0,80.0
 480,16_LINDZI_C,Bachelor,10,1,70.0
 481,16_NICKI_S,Bachelor,9,0,50.0
 482,16_KACIE_B,Bachelor,8,0,80.0
@@ -503,7 +503,7 @@
 501,16_HOLLY_J,Bachelor,1,0,
 502,16_LYNDSIE_J,Bachelor,1,0,
 503,16_SHIRA_A,Bachelor,1,0,
-504,15_EMILY_M,Bachelor,0,0,70.0
+504,15_EMILY_M,Bachelor,11,0,70.0
 505,15_CHANTAL_O,Bachelor,10,0,60.0
 506,15_ASHLEU_H,Bachelor,9,0,80.0
 507,15_SHAWNTEL_N,Bachelor,8,0,50.0
@@ -533,7 +533,7 @@
 531,15_REBECCA_X,Bachelor,1,0,
 532,15_RENEE_H,Bachelor,1,0,
 533,15_SARAH_L,Bachelor,1,0,
-534,14_VIENNA_G,Bachelor,0,0,62.5
+534,14_VIENNA_G,Bachelor,9,0,62.5
 535,14_TENLEY_M,Bachelor,8,1,37.5
 536,14_GIA_A,Bachelor,7,0,50.0
 537,14_ALI_F,Bachelor,6,0,75.0
@@ -558,7 +558,7 @@
 556,14_SHEILA_L,Bachelor,1,0,
 557,14_STEPHANIE_M,Bachelor,1,0,
 558,14_TIANA_K,Bachelor,1,0,
-559,13_MELISSA_R,Bachelor,0,0,75.0
+559,13_MELISSA_R,Bachelor,9,0,75.0
 560,13_MOLLY_M,Bachelor,8,0,50.0
 561,13_JILLIAN_H,Bachelor,7,0,75.0
 562,13_NAOMI_C,Bachelor,6,0,37.5
@@ -583,7 +583,7 @@
 581,13_SHELBY_G,Bachelor,1,0,
 582,13_STACIA_M,Bachelor,1,0,
 583,13_TREASURE_M,Bachelor,1,0,
-584,12_SHAYNE_L,Bachelor,0,0,62.5
+584,12_SHAYNE_L,Bachelor,9,0,62.5
 585,12_CHELSEA_W,Bachelor,8,0,37.5
 586,12_AMANDA_R,Bachelor,7,1,50.0
 587,12_NOELLE_D,Bachelor,6,0,37.5
@@ -633,7 +633,7 @@
 631,11_REGINA_D,Bachelor,1,0,
 632,11_TAUNI_N,Bachelor,1,0,
 633,11_SUSAN_S,Bachelor,1,0,
-634,10_TESSA_H,Bachelor,0,0,37.5
+634,10_TESSA_H,Bachelor,9,0,37.5
 635,10_BEVIN_P,Bachelor,8,0,25.0
 636,10_DANIELLE_I,Bachelor,7,0,25.0
 637,10_AMBER_A,Bachelor,6,0,50.0
@@ -658,7 +658,7 @@
 656,10_LINDA_M,Bachelor,1,0,
 657,10_LINDSAY_S,Bachelor,1,0,
 658,10_TIFFANY_F,Bachelor,1,0,
-659,09_JENNIFER_W,Bachelor,0,0,42.857142857142854
+659,09_JENNIFER_W,Bachelor,8,0,42.857142857142854
 660,09_SADIE_M,Bachelor,7,0,42.857142857142854
 661,09_LISA_B,Bachelor,6,1,71.42857142857143
 662,09_AGNESE_P,Bachelor,5,0,28.57142857142857
@@ -685,7 +685,7 @@
 683,09_BOWE_N,Bachelor,1,0,
 684,09_ANDREA_S,Bachelor,1,0,
 685,09_APRIL_J,Bachelor,1,0,
-686,08_Sarah_S,Bachelor,0,0,42.857142857142854
+686,08_Sarah_S,Bachelor,8,0,42.857142857142854
 687,08_Moana,Bachelor,7,0,28.57142857142857
 688,08_Susan,Bachelor,6,0,57.14285714285714
 689,08_Sarah_B,Bachelor,5,0,28.57142857142857
@@ -710,7 +710,7 @@
 708,08_Princess,Bachelor,1,0,
 709,08_Sara_H,Bachelor,1,0,
 710,08_Venus,Bachelor,1,0,
-711,07_Sarah B.,Bachelor,0,0,42.857142857142854
+711,07_Sarah B.,Bachelor,8,0,42.857142857142854
 712,07_Krisily,Bachelor,7,0,28.57142857142857
 713,07_Sarah W.,Bachelor,6,1,71.42857142857143
 714,07_Kimberly,Bachelor,5,0,57.14285714285714
@@ -735,7 +735,7 @@
 733,07_Geitan,Bachelor,1,0,
 734,07_Valerie,Bachelor,1,0,
 735,07_Danushka,Bachelor,1,0,
-736,06_Mary,Bachelor,0,0,37.5
+736,06_Mary,Bachelor,9,0,37.5
 737,06_Tanya,Bachelor,8,0,50.0
 738,06_Cynthia,Bachelor,7,0,37.5
 739,06_Cheresse,Bachelor,6,0,75.0
@@ -762,7 +762,7 @@
 760,06_Jennifer,Bachelor,1,0,
 761,06_Abby,Bachelor,1,0,
 762,06_Melinda,Bachelor,1,0,
-763,05_JESSICA_B,Bachelor,0,0,42.857142857142854
+763,05_JESSICA_B,Bachelor,8,0,42.857142857142854
 764,05_TARA_H,Bachelor,7,0,57.14285714285714
 765,05_MANDY_J,Bachelor,6,0,42.857142857142854
 766,05_TRISH_S,Bachelor,5,1,71.42857142857143
@@ -788,7 +788,7 @@
 786,05_RACHEL_C,Bachelor,1,0,
 787,05_KRISTIN_C,Bachelor,1,0,
 788,04_Kelly-Jo,Bachelor,7,0,42.857142857142854
-789,04_Estella,Bachelor,0,0,42.857142857142854
+789,04_Estella,Bachelor,8,0,42.857142857142854
 790,04_Mary,Bachelor,6,0,42.857142857142854
 791,04_Meredith,Bachelor,5,0,57.14285714285714
 792,04_Brooke,Bachelor,4,0,
@@ -812,7 +812,7 @@
 810,04_Leona,Bachelor,1,0,
 811,04_Julie,Bachelor,1,0,
 812,04_Shelly,Bachelor,1,0,
-813,03_JEN_X,Bachelor,0,0,42.857142857142854
+813,03_JEN_X,Bachelor,8,0,42.857142857142854
 814,03_KIRSTEN_X,Bachelor,7,0,57.14285714285714
 815,03_TINA_X,Bachelor,6,0,28.57142857142857
 816,03_CRISTINA_X,Bachelor,4,0,28.57142857142857
@@ -837,7 +837,7 @@
 835,03_STEPHANIE_X,Bachelor,1,0,
 836,03_TIFFANY_X,Bachelor,1,0,
 837,03_KRISTEN_X,Bachelor,1,0,
-838,02_HELENE_E,Bachelor,0,0,57.14285714285714
+838,02_HELENE_E,Bachelor,8,0,57.14285714285714
 839,02_BROOKE_S,Bachelor,7,0,57.14285714285714
 840,02_GWEN_G,Bachelor,6,0,42.857142857142854
 841,02_ANGELA_X,Bachelor,5,0,28.57142857142857
@@ -861,7 +861,7 @@
 859,02_LIANGY_X,Bachelor,1,0,
 860,02_LORI_X,Bachelor,1,0,
 861,02_MERILEE_X,Bachelor,1,0,
-862,01_AMANDA_M,Bachelor,0,0,50.0
+862,01_AMANDA_M,Bachelor,7,0,50.0
 863,01_TRISTA_R,Bachelor,6,0,50.0
 864,01_SHANNON_O,Bachelor,5,0,50.0
 865,01_KIM_X,Bachelor,4,0,33.33333333333333
