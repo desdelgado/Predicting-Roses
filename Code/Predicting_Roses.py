@@ -79,7 +79,7 @@ Bachelorette_Data.to_csv('Bachelorette_Data/Training_Data.csv')
 # 
 # Now let's get into the EDA.  We can plot some simple histograms to see the distribution of our data.
 
-# In[5]:
+# In[ ]:
 
 
 data_in = pd.DataFrame(Bachelorette_Data[Bachelorette_Data.columns[1:]]) # Don't look at contestant names
@@ -99,7 +99,7 @@ plt.show()
 # 
 # Let's extend this EDA by looking at how features are correlated with each other in a correlation matrix.  This matrix gives us a number between 1 and -1 for each pair of features which means if the number is close to 1 they're positivity correlated, close to -1 negatively correlated, and if the number is close to 0 there is no correlation.  Thus, we are hoping that there are some features not close to zero with regards to our target variable of "Round_Eliminated."
 
-# In[6]:
+# In[ ]:
 
 
 correlations = Bachelorette_Data[Bachelorette_Data.columns[1:]].corr()
@@ -114,7 +114,7 @@ plt.show()
 # 
 # While this is great first table to look at, the correlation matrix above only looks at linear relationships between variables.  We can go a bit deeper and see if there are non-linear correlations by looking at the mutual information between variables.  In short, this metric tells us how much information we gain about one variable given knowledge of another.  If the metric is 0 then the variables are independent of each other.  On the other hand, the higher the metric the more dependent they are.  To put it another way, if we know it's sunny out, then we also know there's a low probability that it is raining, and we would return a high mutual information score (in our minds).  For further reading, check out this [Wikipedia article](https://en.wikipedia.org/wiki/Mutual_information)  Let's use sklearn's `mutual_information_regression` to see what we can get.
 
-# In[7]:
+# In[ ]:
 
 
 # Get sepearte dataframe 
@@ -158,13 +158,13 @@ print(score.sort_values(by = ['MI_Score'], ascending = False))
 # 
 # As in good practice, we'll split our data into training and test data in order to avoid getting artificially high accuracy numbers.  
 
-# In[8]:
+# In[ ]:
 
 
 print(Bachelorette_Data.iloc[:,2:].head())
 
 
-# In[9]:
+# In[ ]:
 
 
 X_train, X_test, y_train, y_test = train_test_split(Bachelorette_Data.iloc[:,2:], Bachelorette_Data["Round_Eliminated"],
@@ -175,7 +175,7 @@ X_train, X_test, y_train, y_test = train_test_split(Bachelorette_Data.iloc[:,2:]
 # 
 # Taking a step back, when one's on a date typically you go through various decisions about the opposite person: do they like dogs? Do they like certain sports teams? Do they like the bachelorette?  This thought process sounds a lot like a decision tree.  Thus, as a starting point let's investigate a random forest regressor which is an ensemble method utilizing a bunch of decision trees.  Moreover, using the ensemble method will help us avoid overfitting our data.  Furthermore, we can use cross-fold validation to further insulate our model from over fitting.
 
-# In[10]:
+# In[ ]:
 
 
 reg = RandomForestRegressor()
@@ -192,7 +192,7 @@ print('RMSE Score of: ' + str(RMSE_CV_results))
 # 
 # Now that our initial model is alright but not the best, let's reuse a function from a previous regression project I worked on.  In that project, I attempted to predict engine failure using signal data and can be found [here](https://github.com/desdelgado/Turbofan_Project/blob/master/Turbo_Fan_Failure_Prediction.ipynb).  There, I wrote a function that looks at various models and quickly checks them against each other.  This can help guide our choice of model moving forward. 
 
-# In[11]:
+# In[ ]:
 
 
 def compare_algorithms(algorithms, X_data, y_data, scoring = 'neg_mean_squared_error', num_folds = 3, seed = 5):
@@ -230,7 +230,7 @@ def compare_algorithms(algorithms, X_data, y_data, scoring = 'neg_mean_squared_e
 
 # Next, let's use a couple different regression models including the random forest regressor to help calibrate where we are at.  We can then graph and print the RMSE data to inspect our results.
 
-# In[12]:
+# In[ ]:
 
 
 models = []
@@ -245,7 +245,7 @@ models.append(('Bagging', RandomForestRegressor()))
 single_model_compare, results = compare_algorithms(models, X_train, y_train, num_folds = 7)
 
 
-# In[13]:
+# In[ ]:
 
 
 fig = plt.figure()
@@ -275,7 +275,7 @@ print(single_model_compare)
 # 
 # Let's first do the random search.
 
-# In[14]:
+# In[ ]:
 
 
 #%% Hyperparameter Tune Knn
@@ -301,7 +301,7 @@ estimators_random = model1.best_params_
 
 # Let's write a function that will allow us to quickly check this tuned (though randomly) version of the model against just the basic un-tuned model we tried earlier.  
 
-# In[15]:
+# In[ ]:
 
 
 def evaluate_model(model, test_features, test_labels, model_name = 'General', scoring = 'neg_mean_squared_error', num_folds = 7, seed = 5):
@@ -322,7 +322,7 @@ def evaluate_model(model, test_features, test_labels, model_name = 'General', sc
     print('Root Mean Squared Error: {:0.4f} Rounds, std: {:0.4f}.'.format(results_mean, results_std))
 
 
-# In[16]:
+# In[ ]:
 
 
 base_model = KNeighborsRegressor()
@@ -336,7 +336,7 @@ random_accuracy = evaluate_model(best_random, X_test, y_test, 'Random KNN')
 
 # Hmmm, it appears that our randomly tuned model does slightly better than the base model, however, with the standard deviations they are very similar.  As a last effort let's try to do a more fine parameter search.
 
-# In[17]:
+# In[ ]:
 
 
 #%% Hyperparameter Tune Knn
@@ -361,7 +361,7 @@ estimators_grid = model2.best_params_
 
 # Let's check these grid searched parameters against the base model.  I believe, however, we won't get much improvement as the hyperparameters are the same. 
 
-# In[18]:
+# In[ ]:
 
 
 base_model = KNeighborsRegressor()
@@ -375,10 +375,4 @@ random_accuracy = evaluate_model(best_random, X_test, y_test, 'Grid KNN')
 
 # ## Conclusion
 # 
-# It doesn't seem like there's much of an improvement. At this point we have explored several models, tried to improve upon the base model of the best performing one (KNN), and have not had any improvement in our RMSE metric.  Thus, this is the best place to stop for now.  Because the correlation matrix and mutual information scores only returned a few highly correlated features, characteristics such as hometown, age difference, and cultural region seem to not play much of a role when it comes a bachelorette falling for a contestant.  These correlations leads me to believe we need to look elsewhere for more meaningful features.  At this point, however, let's go compare our tuned model against my girlfriends picks to see where we stack up now that bachelorette season 15 has finished.  I did some some similar data engineering to parts 1 and 2 [here]('https://github.com/desdelgado/Predicting-Roses/blob/master/Rose_Data_Engineering_Season_15.ipynb') on the most recent season and then compared the model's picks to my girlfriend's [here]('github.com/desdelgado/Predicting-Roses/blob/master/Machine_Vs_Girlfriend.ipynb').  
-
-# In[ ]:
-
-
-
-
+# It doesn't seem like there's much of an improvement. At this point we have explored several models, tried to improve upon the base model of the best performing one (KNN), and have not had any improvement in our RMSE metric.  Thus, this is the best place to stop for now.  Because the correlation matrix and mutual information scores only returned a few highly correlated features, characteristics such as hometown, age difference, and cultural region seem to not play much of a role when it comes a bachelorette falling for a contestant.  These correlations leads me to believe we need to look elsewhere for more meaningful features.  At this point, however, let's go compare our tuned model against my girlfriends picks to see where we stack up now that bachelorette season 15 has finished.  I did some some similar data engineering to parts 1 and 2 [here](https://github.com/desdelgado/Predicting-Roses/blob/master/Rose_Data_Engineering_Season_15.ipynb) on the most recent season and then compared the model's picks to my girlfriend's [here](github.com/desdelgado/Predicting-Roses/blob/master/Machine_Vs_Girlfriend.ipynb).  
