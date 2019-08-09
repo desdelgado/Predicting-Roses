@@ -8,7 +8,7 @@
 # 
 # ## Introduction
 # 
-# Finally, as a last step let's compare our model's performance vs. my girlfriend's picks using the most recent season of the Bachelorette that started this whole project.  We'll again use the k-nearest neighbors model that we decided to use in [part 3]('https://github.com/desdelgado/Predicting-Roses/blob/master/Predicting_Roses.ipynb') with the hyperparameters we found using a random and then grid search.  Let's dive in.
+# Finally, as a last step let's compare our model's performance vs. my girlfriend's picks using the most recent season of the Bachelorette that started this whole project.  We'll again use the k-nearest neighbors model that we decided to use in [part 3](https://github.com/desdelgado/Predicting-Roses/blob/master/Predicting_Roses.ipynb) with the hyperparameters we found using a random and then grid search.  Let's dive in.
 
 # In[1]:
 
@@ -21,7 +21,7 @@ from sklearn.metrics import mean_squared_error as MSE
 
 # ## Load in Data
 # 
-# Let's load in the contestant data from season named "validation_15".  I added the data engineering workbook [here]('https://github.com/desdelgado/Predicting-Roses/blob/master/Rose_Data_Engineering_Season_15.ipynb') from season 15 which is very similar to the first two data engineering parts.  We'll also load in the training data we used in [part 3]('https://github.com/desdelgado/Predicting-Roses/blob/master/Predicting_Roses.ipynb') to train our model.  
+# Let's load in the contestant data from season named "validation_15".  I added the data engineering workbook [here](https://github.com/desdelgado/Predicting-Roses/blob/master/Rose_Data_Engineering_Season_15.ipynb) from season 15 which is very similar to the first two data engineering parts.  We'll also load in the training data we used in [part 3](https://github.com/desdelgado/Predicting-Roses/blob/master/Predicting_Roses.ipynb) to train our model.  
 
 # In[2]:
 
