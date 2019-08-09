@@ -13,7 +13,7 @@
 # 
 # Before we go any further let's import the libraries and datasets from [part 1](https://github.com/desdelgado/Predicting_Roses/blob/master/Rose_Data_Engineering_P1.ipynb).
 
-# In[26]:
+# In[1]:
 
 
 import pandas as pd
@@ -26,7 +26,7 @@ import requests
 import warnings
 
 
-# In[27]:
+# In[2]:
 
 
 elim_data = pd.read_csv('Bachelorette_Data/elim_data.csv')
@@ -42,12 +42,11 @@ data_table = data_table.drop('Unnamed: 0', axis = 1)
 # 
 # To do this we first need to home town of every contestant and bachelorette.  On the contestant side, there’s luckily a [wikipedia](https://en.wikipedia.org/wiki/The_Bachelorette) page that has links to every season.  We can grab all those links and add it into a list for us to scrape.
 
-# In[28]:
+# In[3]:
 
 
 #Only grab bachelorette data.  This is our new table that we will be adding all the features to
 bachelorette_predict = pd.DataFrame(data_table[data_table['SHOW'] == 'Bachelorette']) 
-
 
 Bachelorette_seasons = ['https://en.wikipedia.org/wiki/The_Bachelorette_(season_1)', 'https://en.wikipedia.org/wiki/The_Bachelorette_(season_2)',
                     'https://en.wikipedia.org/wiki/The_Bachelorette_(season_3)', 'https://en.wikipedia.org/wiki/The_Bachelorette_(season_4)',
@@ -62,7 +61,7 @@ Bachelorette_seasons = ['https://en.wikipedia.org/wiki/The_Bachelorette_(season_
 # 
 # I'll quickly show how we can scrape the page and get the information into the dataframe.
 
-# In[29]:
+# In[4]:
 
 
 URL= 'https://en.wikipedia.org/wiki/The_Bachelorette_(season_13)'
@@ -94,7 +93,7 @@ print(contest_df.head())
 # 
 # Below is a loop that takes in a wiki URL from the list above, finds the relevant information, sorts the data into the naming convention we want, and then saves it into an overall dataframe. For a more intricate explanation of the idea feel free to read the code comments.
 
-# In[30]:
+# In[5]:
 
 
 seasons_wiki = Bachelorette_seasons
@@ -213,7 +212,7 @@ for season in seasons_wiki:
         missed_season_tracker.append(season)
 
 
-# In[31]:
+# In[6]:
 
 
 print(wiki_df.head())
@@ -223,7 +222,7 @@ print(wiki_df.head())
 # 
 # Now let's merge the two tables together on the contestant names. Once we do that let's do a quick check to make sure the tables are the same length, and nothing got lost in the merge.
 
-# In[32]:
+# In[7]:
 
 
 elim_data.CONTESTANT = elim_data.CONTESTANT.str.strip()
@@ -240,7 +239,7 @@ print("wiki_df length is " + str(len(wiki_df)))
 
 # Dang, it seems like we lost ~30 contestants or 10% of our data.  We can either just carry on and drop the data, but I have a feeling that we can do a bit better.  We can make a list of all the contestants that aren't in the data set and see what's up.
 
-# In[33]:
+# In[8]:
 
 
 missing = set(wiki_df.CONTESTANT) ^ set(bachelorette_predict.CONTESTANT)
@@ -250,7 +249,7 @@ print(missing)
 
 # Looking closely, it seems like some of them are only 1 or 2 letters off (i.e '03_KEVIN' vs '03_KEVIN_X').  We can write a quick function that will compare two strings and return true if they're only two letters different.
 
-# In[34]:
+# In[9]:
 
 
 def isEditDistanceTwo(s1, s2): 
@@ -293,7 +292,7 @@ def isEditDistanceTwo(s1, s2):
 
 # We can then iterate through the two different tables and change the "wiki_df" contestant name to the actual name if it's only two letters different from a contestant entry on the table we're trying to merge on.  For example "03_KEVIN_X" on the wiki_df table would return true when compared to "03_KEVIN" on bachelorette_predict table  The wiki_df entry would then be changed to "03_KEVIN" and we can then easily match the Wikipedia data to that contestant.  For further details on how this is done, feel free to read the code comments.
 
-# In[35]:
+# In[10]:
 
 
 #Get the names that are in the wiki_df but not our target dataframe
@@ -325,7 +324,7 @@ for counter in range(0, len(wiki_df)):
 
 # Now let's try merging again and print out the table lengths to check.
 
-# In[36]:
+# In[11]:
 
 
 elim_data.CONTESTANT = elim_data.CONTESTANT.str.strip()
@@ -347,7 +346,7 @@ print("wiki_df length is " + str(len(wiki_df)))
 # 
 # Remember the overarching goal was to use this hometown data to see if the contestants are from the same cultural region and even the same hometown as the bachelorette.  This leads into the question of how do we split up the "cultural" regions of the United States?  Digging around I found [this article](https://www.businessinsider.com/regional-differences-united-states-2018-1) where journalist Colin Woodard broke the US down into 11 different cultural regions.  While this map would have been great to use, it was difficult to quickly find a list of the counties in each of these regions.  Instead I found a [britannica](https://www.britannica.com/place/United-States/The-newer-culture-areas) article that gave a nice breakdown.  We can then make some lists of which states below in each region.  I know there are a bunch of ways to slice this and some states are in multiple regions, however, this breakdown is a good first attempt.
 
-# In[37]:
+# In[12]:
 
 
 new_england = ['Maine', 'Vermont', 'New Hampshire', 'Massachusetts', 'Rhode Island', 'Connecticut'] 
@@ -367,7 +366,7 @@ west = ['California', 'Nevada', 'Alaska', 'Hawaii']
 
 # We can then write a function that will return the name of the region the hometown of the contestants are from.
 
-# In[38]:
+# In[13]:
 
 
 def findregion(ind):
@@ -399,7 +398,7 @@ def findregion(ind):
 
 # Let's then grab the home state from the hometown column and then run it through that function.  Finally, we'll quickly check if there's any null values denoting we missed a contestant.
 
-# In[39]:
+# In[14]:
 
 
 running_table['Home State'] = running_table['Hometown'].str.split(",").str[1].str.strip()
@@ -413,7 +412,7 @@ print('Number of missing contestants: ' +str(running_table['Culture Region'].isn
 
 # Nice.  Now we need to get the bachelorette data to match. I went through the Wikipedia pages and put the hometown, season, and age of each bachelorette in an excel sheet.  I am sure given more time, there's a better computational way to do this but with only 13 entries sometimes you just gotta do it the hard way.
 
-# In[40]:
+# In[15]:
 
 
 bachelorettesHT = pd.read_excel('Bachelorette_Data/Hometown_Bacherlorette.xlsx')
@@ -425,7 +424,7 @@ print(bachelorettesHT.head(10))
 
 # We can now go through and see if the "culture region" and "Hometown" columns match between the contestants and their respective bachelorettes.
 
-# In[41]:
+# In[16]:
 
 
 running_table['Match Region'] = 0
@@ -448,7 +447,7 @@ for row in bachelorettesHT.index.tolist():
             
 #Add this data to the prediction table.
 bachelorette_predict = pd.merge(bachelorette_predict, running_table[['CONTESTANT','Match Region', 'Match City']], on = 'CONTESTANT')      
-  
+
 #Print out to see what we got
 print(running_table[['CONTESTANT','Match City', 'Match Region']].head(20))
 
@@ -461,7 +460,7 @@ print(running_table[['CONTESTANT','Match City', 'Match Region']].head(20))
 # 
 # On a different note, while writing this up the wiki article changed multiple times.  So, for the sake of reproducibility, I will write the scrape code into comments and load the data from a saved csv file.   
 
-# In[42]:
+# In[17]:
 
 
 '''
@@ -480,7 +479,7 @@ print(state_leanings.head())
 
 # Before matching these numbers to the contestants, I did notice some of the contestants (and even a bachelorette!) are from Canada.  So, let's first grab the PVI for the different Canadian territories so we don't miss out on that data. We can go to Canada's Wikipedia page that has a table of the territory and each respective political leanings.  Like the PVI wiki page, this page changed multiple times even while writing this project up.  So again, for the sake of reproducibility, I'll write the scrape code in comments and have saved csv file from that output we can just load in.  
 
-# In[43]:
+# In[18]:
 
 
 '''
@@ -508,7 +507,7 @@ print(canada_pol)
 
 # We can assign PVI numbers to each territory based on its leanings.  For example, we can denote "Centre-right" as 5.  Having some foresight, when we get around to assigning PVI numbers to contestants, let's make democrats negative numbers and republicans positive.  This way when we can take the difference in PVI numbers between contestants and bachelorettes, couples that lean in different ideologies will have a bigger difference.  Moreover, we can make this assumption cause in the 2016 election roughly the same number of people voted conservative and liberal.
 
-# In[44]:
+# In[19]:
 
 
 def setCanPolitical(ind):
@@ -531,7 +530,7 @@ print(canada_pol)
 
 # Awesome, now let's write a function that will intake contestant data and match their home state to a PVI number.  I also included matching the Canada PVI numbers we created.  Eventually we will want to look at the bachelor data (when that season rolls around) so writing a reusable function now will save us time down the road.  
 
-# In[45]:
+# In[20]:
 
 
 def FindPolLean(on_going_table, PVI_table, canada_table):
@@ -591,7 +590,7 @@ def FindPolLean(on_going_table, PVI_table, canada_table):
 
 # Now apply this function to our table.
 
-# In[46]:
+# In[21]:
 
 
 running_table = FindPolLean(running_table,state_leanings, canada_pol)
@@ -600,7 +599,7 @@ print(running_table.head())
 
 # Awesome.  Let's check really quick that we got the right PVI for the Canadian contestants by looking for 'Alberta' which should have a PVI number of 2.
 
-# In[47]:
+# In[22]:
 
 
 running_table[running_table['Home State'] == 'Alberta'].iloc[:,-1]
@@ -608,7 +607,7 @@ running_table[running_table['Home State'] == 'Alberta'].iloc[:,-1]
 
 # Let's apply the same function to the bachelorette table.
 
-# In[48]:
+# In[23]:
 
 
 bachelorettesHT = FindPolLean(bachelorettesHT, state_leanings, canada_pol)
@@ -619,7 +618,7 @@ print(bachelorettesHT.head())
 # 
 # Let's now compare the PVI and age of each bachelorette and their respective contestants.
 
-# In[49]:
+# In[24]:
 
 
 bachelorette_pol_lean = pd.DataFrame({
@@ -641,13 +640,13 @@ print(running_table.head())
 
 # Now that we have the political difference and age difference, we can merge those columns into our final dataset that we will use to try to predict eliminations.  
 
-# In[50]:
+# In[25]:
 
 
 bachelorette_predict = pd.merge(bachelorette_predict, running_table[['CONTESTANT','Political Difference', 'Age Difference']], on = 'CONTESTANT', how = 'left')
 
 #Save the data set to a csv
-bachelorette_predict.to_csv('Bachelorette_Data/Bachelorette_Predict.csv')
+bachelorette_predict.to_csv('Bachelorette_Data/bachelorette_Predict.csv')
 
 print(bachelorette_predict.head())
 

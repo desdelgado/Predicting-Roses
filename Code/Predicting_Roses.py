@@ -49,9 +49,9 @@ import numpy as np
 # In[2]:
 
 
-Bachelorette_Data = pd.read_csv('Bachelorette_Data/Bachelorette_Predict.csv', header = 0 )
+Bachelorette_Data = pd.read_csv('Bachelorette_Data/bachelorette_Predict.csv', header = 0 )
 Bachelorette_Data = Bachelorette_Data.drop(['Unnamed: 0','SHOW'], axis = 1)
-print(Bachelorette_Data.columns)
+print(Bachelorette_Data.head())
 
 
 # Cool, we have are target variable in 'Round_Eliminated' with various feature columns
@@ -61,19 +61,28 @@ print(Bachelorette_Data.columns)
 # In[3]:
 
 
-data_in = pd.DataFrame(Bachelorette_Data[Bachelorette_Data.columns[1:]])
-print('Null values before: ' +str(data_in['Percentage Left after D1'].isnull().sum()))
-data_in['Percentage Left after D1'].fillna(0, inplace = True)
-print('Null values After: ' +str(data_in['Percentage Left after D1'].isnull().sum()))
+#data_in = pd.DataFrame(Bachelorette_Data[Bachelorette_Data.columns[1:]])
+print('Null values before: ' +str(Bachelorette_Data['Percentage Left after D1'].isnull().sum()))
+Bachelorette_Data['Percentage Left after D1'].fillna(0, inplace = True)
+print('Null values After: ' +str(Bachelorette_Data['Percentage Left after D1'].isnull().sum()))
+
+
+# Awesome, we've not gotten rid of all the null values in the column let's output this dataframe as training data that we can use down the line.
+
+# In[4]:
+
+
+Bachelorette_Data.to_csv('Bachelorette_Data/Training_Data.csv')
 
 
 # ## Exploratory Data Analysis
 # 
 # Now let's get into the EDA.  We can plot some simple histograms to see the distribution of our data.
 
-# In[4]:
+# In[5]:
 
 
+data_in = pd.DataFrame(Bachelorette_Data[Bachelorette_Data.columns[1:]]) # Don't look at contestant names
 plt.figure(figsize=(20,40), facecolor='white')
 plot_number = 1
 for column in data_in.columns:
@@ -90,7 +99,7 @@ plt.show()
 # 
 # Let's extend this EDA by looking at how features are correlated with each other in a correlation matrix.  This matrix gives us a number between 1 and -1 for each pair of features which means if the number is close to 1 they're positivity correlated, close to -1 negatively correlated, and if the number is close to 0 there is no correlation.  Thus, we are hoping that there are some features not close to zero with regards to our target variable of "Round_Eliminated."
 
-# In[17]:
+# In[6]:
 
 
 correlations = Bachelorette_Data[Bachelorette_Data.columns[1:]].corr()
@@ -100,19 +109,20 @@ sns.heatmap(correlations,annot=True, cmap = 'coolwarm')
 plt.show()
 
 
-# Dang, when we look at the "Round_Eliminated" either column or row we see that the most positive correlation is the "Political Difference" at 0.11 and the most negative is the "Percentage Left after D1" at -0.23.  On the surface, this data set doesn't look great as we have maybe two variables that are correlated to the target variable.  
+# Interesting.  When we look at the "Round_Eliminated" either column or row we see that the most positive correlation is the
+# "Percentage Left after D1" at a whopping 0.7 which again agrees with [ 538's article](https://fivethirtyeight.com/features/the-bachelorette/) which talks about the importance of getting an early first date.  We also see that the "First_impression_Rose" is also correlated with a score of 0.31.  Finally, the "Political difference" with a score of 0.11 is slightly correlated meaning that all our web scrapping didn't go completely to waste. 
 # 
-# All is not lost though as the correlation matrix above only looks at the linear relationship between variables.  We can see if there are non-linear correlation's by looking at the mutual information between variables.  In short, this metric tells us how much information we gain about one variable given knowledge of another.  If the metric is 0 then the variables are independent of each other.  On the other hand, the higher the metric to more dependent they are.  To put it another way, if we know it's sunny out, then we also know there's a low probability that it is raining and we would return a high mutual information score (in our minds).  For further reading, check out this [Wikipedia article](https://en.wikipedia.org/wiki/Mutual_information)  Let's use sklearn's `mutual_information_regression` to see what we can get.
+# While this is great first table to look at, the correlation matrix above only looks at linear relationships between variables.  We can go a bit deeper and see if there are non-linear correlations by looking at the mutual information between variables.  In short, this metric tells us how much information we gain about one variable given knowledge of another.  If the metric is 0 then the variables are independent of each other.  On the other hand, the higher the metric the more dependent they are.  To put it another way, if we know it's sunny out, then we also know there's a low probability that it is raining, and we would return a high mutual information score (in our minds).  For further reading, check out this [Wikipedia article](https://en.wikipedia.org/wiki/Mutual_information)  Let's use sklearn's `mutual_information_regression` to see what we can get.
 
-# In[6]:
+# In[7]:
 
 
 # Get sepearte dataframe 
-MI_df = pd.DataFrame(data_in)
+MI_df = pd.DataFrame(Bachelorette_Data)
 
 # Split the dataframe into our target and feature variables
 target = MI_df['Round_Eliminated']
-MI_df.drop(['Round_Eliminated'], axis=1, inplace=True)
+MI_df.drop(['Round_Eliminated', 'CONTESTANT'], axis=1, inplace=True)
 
 score = pd.DataFrame()
 
@@ -136,9 +146,11 @@ ax.set_title('Round Eliminated Mutual Information ', fontsize = 20);
 print(score.sort_values(by = ['MI_Score'], ascending = False))
 
 
-# Alright, we see that most of our features are pretty close to zero.  This trend means that most of these features are close to independent of which round a contestant will be eliminated.  The only outlier is the "Percentage Left after D1" which makes sense as [538's article](https://fivethirtyeight.com/features/the-bachelorette/) also talked about how important getting an early first date is.  Finally, I am most surprised that "Match City" is at the bottom considering the prevailing notion of people falling in love with what is familiar i.e someone from their hometown.  I guess the construct of the show and the magic of L.A. or NYC blanks this trend.  
+# Alright, we see that most of our features are pretty close to zero.  This trend means that most of these features are close to independent of which round a contestant will be eliminated beyond the "Percentage_Left_after_D1" and "First_Impression_Rose."  
 # 
-# Going forward, this isn't great news for our model building, as there's not a lot of dependencies between the features and the target.  Let's still run this data through some different models to see what happens.
+# After looking at both the correlation matrix and the mutual information score, I am most surprised that the "Match Region" feature is not very correlated considering the prevailing notion of people falling in love with what is familiar i.e someone from a similar culture.  I guess the construct of the show and the magic of L.A. or NYC might blank this trend. 
+# 
+# Going forward, this isn't the best news as I would like to have a few more features have correlations but we still have something to work with.  Let's go ahead a run this data through some different models to see what happens. 
 
 # ## Picking a Model
 # 
@@ -146,17 +158,24 @@ print(score.sort_values(by = ['MI_Score'], ascending = False))
 # 
 # As in good practice, we'll split our data into training and test data in order to avoid getting artificially high accuracy numbers.  
 
-# In[7]:
+# In[8]:
 
 
-X_train, X_test, y_train, y_test = train_test_split(data_in.iloc[:,1:], data_in["Round_Eliminated"], test_size=0.3, random_state=5)
+print(Bachelorette_Data.iloc[:,2:].head())
+
+
+# In[9]:
+
+
+X_train, X_test, y_train, y_test = train_test_split(Bachelorette_Data.iloc[:,2:], Bachelorette_Data["Round_Eliminated"],
+                                                    test_size=0.3, random_state=5)
 
 
 # This is where a bit of art comes in in terms of picking a model.  Normally, I would start with a linear model, however, we already saw in the correlation matrix not a lot of linear dependency between the features and target variable so let's avoid that.  
 # 
 # Taking a step back, when one's on a date typically you go through various decisions about the opposite person: do they like dogs? Do they like certain sports teams? Do they like the bachelorette?  This thought process sounds a lot like a decision tree.  Thus, as a starting point let's investigate a random forest regressor which is an ensemble method utilizing a bunch of decision trees.  Moreover, using the ensemble method will help us avoid overfitting our data.  Furthermore, we can use cross-fold validation to further insulate our model from over fitting.
 
-# In[8]:
+# In[10]:
 
 
 reg = RandomForestRegressor()
@@ -173,7 +192,7 @@ print('RMSE Score of: ' + str(RMSE_CV_results))
 # 
 # Now that our initial model is alright but not the best, let's reuse a function from a previous regression project I worked on.  In that project, I attempted to predict engine failure using signal data and can be found [here](https://github.com/desdelgado/Turbofan_Project/blob/master/Turbo_Fan_Failure_Prediction.ipynb).  There, I wrote a function that looks at various models and quickly checks them against each other.  This can help guide our choice of model moving forward. 
 
-# In[9]:
+# In[11]:
 
 
 def compare_algorithms(algorithms, X_data, y_data, scoring = 'neg_mean_squared_error', num_folds = 3, seed = 5):
@@ -211,7 +230,7 @@ def compare_algorithms(algorithms, X_data, y_data, scoring = 'neg_mean_squared_e
 
 # Next, let's use a couple different regression models including the random forest regressor to help calibrate where we are at.  We can then graph and print the RMSE data to inspect our results.
 
-# In[10]:
+# In[12]:
 
 
 models = []
@@ -226,7 +245,7 @@ models.append(('Bagging', RandomForestRegressor()))
 single_model_compare, results = compare_algorithms(models, X_train, y_train, num_folds = 7)
 
 
-# In[11]:
+# In[13]:
 
 
 fig = plt.figure()
@@ -248,7 +267,7 @@ plt.show()
 print(single_model_compare)
 
 
-# From here it looks like timing isn't much of an issue.  It also looks like a K-Nearest Neighbor (KNN) might be the best bet with an average RMSE score of ~2.03.  We can then tune the various parameters that go into a KNN model and see if we can improve upon this base RMSE score.  
+# From here it looks like timing isn't much of an issue.  It also looks like a K-Nearest Neighbor (KNN) might be the best bet with an average RMSE score of ~1.86.  We can then tune the various parameters that go into a KNN model and see if we can improve upon this base RMSE score.  
 # 
 # ## Tuning Our Best Model
 # 
@@ -256,7 +275,7 @@ print(single_model_compare)
 # 
 # Let's first do the random search.
 
-# In[12]:
+# In[14]:
 
 
 #%% Hyperparameter Tune Knn
@@ -282,7 +301,7 @@ estimators_random = model1.best_params_
 
 # Let's write a function that will allow us to quickly check this tuned (though randomly) version of the model against just the basic un-tuned model we tried earlier.  
 
-# In[13]:
+# In[15]:
 
 
 def evaluate_model(model, test_features, test_labels, model_name = 'General', scoring = 'neg_mean_squared_error', num_folds = 7, seed = 5):
@@ -303,7 +322,7 @@ def evaluate_model(model, test_features, test_labels, model_name = 'General', sc
     print('Root Mean Squared Error: {:0.4f} Rounds, std: {:0.4f}.'.format(results_mean, results_std))
 
 
-# In[14]:
+# In[16]:
 
 
 base_model = KNeighborsRegressor()
@@ -317,7 +336,7 @@ random_accuracy = evaluate_model(best_random, X_test, y_test, 'Random KNN')
 
 # Hmmm, it appears that our randomly tuned model does slightly better than the base model, however, with the standard deviations they are very similar.  As a last effort let's try to do a more fine parameter search.
 
-# In[15]:
+# In[17]:
 
 
 #%% Hyperparameter Tune Knn
@@ -342,7 +361,7 @@ estimators_grid = model2.best_params_
 
 # Let's check these grid searched parameters against the base model.  I believe, however, we won't get much improvement as the hyperparameters are the same. 
 
-# In[16]:
+# In[18]:
 
 
 base_model = KNeighborsRegressor()
@@ -358,8 +377,14 @@ random_accuracy = evaluate_model(best_random, X_test, y_test, 'Grid KNN')
 # 
 # Dang, it doesn't seem like there's an improvement on the base model.  At this point we have explored several models, tried to improve upon the base model of the best performing one (KNN), and have not had any improvement in our RMSE metric.  Thus, this is the best place to stop for now.  I feel our main problem is that the data we gathered was not good enough to extract any meaningful value in terms of encoding love and predicting when each contestant was going to be eliminated. 
 # 
-# Because the correlation matrix didn't return any highly correlated features, characteristics such as hometown, cultural region, and political leanings seem to not play much of a role when it comes a bachelorette falling for a contestant.  I would speculate that this lack of correlation might arise from the setting of the bachelorette being a mansion in LA or New York which effectively removes the comfort/advantage of a hometown/same culture from the equation.  Being able to predict with a RMSE score of ~2 rounds, however, does allow us to at least get a sense of if the contestant will be eliminated in the first few rounds or more towards the end of the show.  For example, if one contestant had a predicted round of 2 and an RMSE of 2, then we could guess they have a higher chance of being eliminated before someone with a predicted round of 8 and RMSE of 2.  Once this current season is done #TeamPete, I'd like to compare what my girlfriend predicted in terms of round eliminated vs our model.  I think it's important to remember that the overall goal of machine learning to assist and do better than humans at discerning patterns in complex material.  Thus, we should always test these models against human performance. 
+# Because the correlation matrix only returned a few highly correlated features, characteristics such as hometown, cultural region, and age difference seem to not play much of a role when it comes a bachelorette falling for a contestant.  I would speculate that this lack of correlation might arise from the setting of the bachelorette being a mansion in LA or New York which effectively removes the comfort/advantage of a hometown/same culture from the equation.  Being able to predict with a RMSE score of ~2 rounds, however, does allow us to at least get a sense of if the contestant will be eliminated in the first few rounds or more towards the end of the show.  For example, if one contestant had a predicted round of 2 and an RMSE of 2, then we could guess they have a higher chance of being eliminated before someone with a predicted round of 8 and RMSE of 2.  Once this current season is done #TeamPete, I'd like to compare what my girlfriend predicted in terms of round eliminated vs our model.  I think it's important to remember that the overall goal of machine learning to assist and do better than humans at discerning patterns in complex material.  Thus, we should always test these models against human performance. 
 # 
 # Going forward, I would like to explore a more round by round approach using Bayesian statistics.  The idea being that each round is going to have features that change the likelihood of a contestant moving on.  This approach would also reflect better how my girlfriend thinks about playing fantasy as her feelings about contestants change week to week based on what occurred in each episode.  All is not lost though from this project as we can use some of these features to set the initial guess in our Bayesian model.  Though the modeling here didn't go as we planned, I still enjoyed constructing a dataset from scratch as well as learned a lot about the bachelorette. 
 # 
 # As always, this is a learning experience, so I welcome questions, comments, and suggestions for improvements. Email me at davidesmoleydelgado@gmail.com or @davidesdelgado on twitter.
+
+# In[ ]:
+
+
+
+
