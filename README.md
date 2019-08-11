@@ -15,4 +15,4 @@ Rose_Data_Engineering_P2 - Does the bachelorette and a contestant have the same 
 
 Predicting_Roses - Modeling of custom-built dataset and conclusion.
 
-Model_Vs_Girlfriend - Comparing the best model we could come up with given the data to my girlfriend's picks.
+Model_Vs_Girlfriend - Comparing the best model we could come up with using our custom built dataset to my girlfriend's picks.
