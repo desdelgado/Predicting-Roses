@@ -79,7 +79,7 @@ Bachelorette_Data.to_csv('Bachelorette_Data/Training_Data.csv')
 # 
 # Now let's get into the EDA.  We can plot some simple histograms to see the distribution of our data.
 
-# In[ ]:
+# In[5]:
 
 
 data_in = pd.DataFrame(Bachelorette_Data[Bachelorette_Data.columns[1:]]) # Don't look at contestant names
@@ -99,7 +99,7 @@ plt.show()
 # 
 # Let's extend this EDA by looking at how features are correlated with each other in a correlation matrix.  This matrix gives us a number between 1 and -1 for each pair of features which means if the number is close to 1 they're positivity correlated, close to -1 negatively correlated, and if the number is close to 0 there is no correlation.  Thus, we are hoping that there are some features not close to zero with regards to our target variable of "Round_Eliminated."
 
-# In[ ]:
+# In[6]:
 
 
 correlations = Bachelorette_Data[Bachelorette_Data.columns[1:]].corr()
@@ -109,12 +109,11 @@ sns.heatmap(correlations,annot=True, cmap = 'coolwarm')
 plt.show()
 
 
-# Interesting.  When we look at the "Round_Eliminated" either column or row we see that the most positive correlation is the
-# "Percentage Left after D1" at a whopping 0.7 which again agrees with [ 538's article](https://fivethirtyeight.com/features/the-bachelorette/) which talks about the importance of getting an early first date.  We also see that the "First_impression_Rose" is also correlated with a score of 0.31.  Finally, the "Political difference" with a score of 0.11 is slightly correlated meaning that all our web scrapping didn't go completely to waste. 
+# Interesting.  When we look at the "Round_Eliminated", (either column or row) we see that the most positive correlation is the "Percentage Left after D1" at a whopping 0.7.  This strong correlation again agrees with [ 538's article](https://fivethirtyeight.com/features/the-bachelorette/) which talks about the importance of getting an early first date.  We also see that the "First_impression_Rose" is also correlated with a score of 0.31.  Finally, the "Political difference" with a score of 0.11 is slightly correlated meaning that all our web scrapping didn't go completely to waste. 
 # 
 # While this is great first table to look at, the correlation matrix above only looks at linear relationships between variables.  We can go a bit deeper and see if there are non-linear correlations by looking at the mutual information between variables.  In short, this metric tells us how much information we gain about one variable given knowledge of another.  If the metric is 0 then the variables are independent of each other.  On the other hand, the higher the metric the more dependent they are.  To put it another way, if we know it's sunny out, then we also know there's a low probability that it is raining, and we would return a high mutual information score (in our minds).  For further reading, check out this [Wikipedia article](https://en.wikipedia.org/wiki/Mutual_information)  Let's use sklearn's `mutual_information_regression` to see what we can get.
 
-# In[ ]:
+# In[7]:
 
 
 # Get sepearte dataframe 
@@ -158,13 +157,13 @@ print(score.sort_values(by = ['MI_Score'], ascending = False))
 # 
 # As in good practice, we'll split our data into training and test data in order to avoid getting artificially high accuracy numbers.  
 
-# In[ ]:
+# In[8]:
 
 
 print(Bachelorette_Data.iloc[:,2:].head())
 
 
-# In[ ]:
+# In[9]:
 
 
 X_train, X_test, y_train, y_test = train_test_split(Bachelorette_Data.iloc[:,2:], Bachelorette_Data["Round_Eliminated"],
@@ -175,7 +174,7 @@ X_train, X_test, y_train, y_test = train_test_split(Bachelorette_Data.iloc[:,2:]
 # 
 # Taking a step back, when one's on a date typically you go through various decisions about the opposite person: do they like dogs? Do they like certain sports teams? Do they like the bachelorette?  This thought process sounds a lot like a decision tree.  Thus, as a starting point let's investigate a random forest regressor which is an ensemble method utilizing a bunch of decision trees.  Moreover, using the ensemble method will help us avoid overfitting our data.  Furthermore, we can use cross-fold validation to further insulate our model from over fitting.
 
-# In[ ]:
+# In[10]:
 
 
 reg = RandomForestRegressor()
@@ -192,7 +191,7 @@ print('RMSE Score of: ' + str(RMSE_CV_results))
 # 
 # Now that our initial model is alright but not the best, let's reuse a function from a previous regression project I worked on.  In that project, I attempted to predict engine failure using signal data and can be found [here](https://github.com/desdelgado/Turbofan_Project/blob/master/Turbo_Fan_Failure_Prediction.ipynb).  There, I wrote a function that looks at various models and quickly checks them against each other.  This can help guide our choice of model moving forward. 
 
-# In[ ]:
+# In[11]:
 
 
 def compare_algorithms(algorithms, X_data, y_data, scoring = 'neg_mean_squared_error', num_folds = 3, seed = 5):
@@ -230,7 +229,7 @@ def compare_algorithms(algorithms, X_data, y_data, scoring = 'neg_mean_squared_e
 
 # Next, let's use a couple different regression models including the random forest regressor to help calibrate where we are at.  We can then graph and print the RMSE data to inspect our results.
 
-# In[ ]:
+# In[12]:
 
 
 models = []
@@ -245,7 +244,7 @@ models.append(('Bagging', RandomForestRegressor()))
 single_model_compare, results = compare_algorithms(models, X_train, y_train, num_folds = 7)
 
 
-# In[ ]:
+# In[13]:
 
 
 fig = plt.figure()
@@ -275,7 +274,7 @@ print(single_model_compare)
 # 
 # Let's first do the random search.
 
-# In[ ]:
+# In[14]:
 
 
 #%% Hyperparameter Tune Knn
@@ -301,7 +300,7 @@ estimators_random = model1.best_params_
 
 # Let's write a function that will allow us to quickly check this tuned (though randomly) version of the model against just the basic un-tuned model we tried earlier.  
 
-# In[ ]:
+# In[15]:
 
 
 def evaluate_model(model, test_features, test_labels, model_name = 'General', scoring = 'neg_mean_squared_error', num_folds = 7, seed = 5):
@@ -322,7 +321,7 @@ def evaluate_model(model, test_features, test_labels, model_name = 'General', sc
     print('Root Mean Squared Error: {:0.4f} Rounds, std: {:0.4f}.'.format(results_mean, results_std))
 
 
-# In[ ]:
+# In[16]:
 
 
 base_model = KNeighborsRegressor()
@@ -336,7 +335,7 @@ random_accuracy = evaluate_model(best_random, X_test, y_test, 'Random KNN')
 
 # Hmmm, it appears that our randomly tuned model does slightly better than the base model, however, with the standard deviations they are very similar.  As a last effort let's try to do a more fine parameter search.
 
-# In[ ]:
+# In[17]:
 
 
 #%% Hyperparameter Tune Knn
@@ -361,7 +360,7 @@ estimators_grid = model2.best_params_
 
 # Let's check these grid searched parameters against the base model.  I believe, however, we won't get much improvement as the hyperparameters are the same. 
 
-# In[ ]:
+# In[18]:
 
 
 base_model = KNeighborsRegressor()
